@@ -1,0 +1,23 @@
+$noop(Testing)
+
+	
+
+$noop(Fussy Stuff)
+	$set(tracknumber,$pad(%tracknumber%,3,0))
+	$set(discnumber,$pad(%discnumber%,2,0))
+	$unset(%lyrics%)
+	$set(artist,$rreplace(%artists%,;.*\$,))
+	$if($eq(%_aaeCredAlbumArtists%,Various Artists),$if($eq(%_secondaryreleasetype%,compilation),$set(albumartist,1Various),$set(albumartist,1Soundtrack)),$set(albumartist,$delprefix(%_aaeCredAlbumArtists%,prefixes=A,An,The)))
+
+$noop($set(albumartist,%_aaeCredAlbumArtists%))
+
+$noop(Set Sort orders to something useful)
+	$set(artistsort,$delprefix(%artist%,prefixes=A,An,The))
+	$if($eq(%_aaeCredAlbumArtists%,Various Artists),$if($eq(%_secondaryreleasetype%,compilation),$set(albumartistsort,1Various),$set(albumartistsort,1Soundtrack)),$set(albumartistsort,$delprefix(%_aaeCredAlbumArtists%,prefixes=A,An,The)))
+	$set(titlesort,$delprefix(%title%,prefixes=A,An,The))
+	$unset(albumsort)
+	$set(albumsort,$delprefix(%album%,prefixes=A,An,The))
+	$set(composersort,$delprefix(%composer%,prefixes=A,An,The))
+
+$noop(Going off the rails)
+	$set(PicardRate,%_releasecomment%)
